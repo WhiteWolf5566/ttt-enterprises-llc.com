@@ -86,7 +86,7 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background-color: rgba(7, 10, 18, 0.85);
+      background-color: rgba(7, 10, 18, 0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -197,6 +197,7 @@
       box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
       transition: all 0.2s ease;
       border: 1px solid rgba(255, 255, 255, 0.15);
+      white-space: nowrap;
     }
 
     .btn-cta:hover {
@@ -518,13 +519,91 @@
       font-size: 0.88rem;
     }
 
+    /* FULL MOBILE RESPONSIVE OVERHAUL */
     @media (max-width: 768px) {
-      body { padding-top: 135px; }
-      .utility-container { flex-direction: column; gap: 0.4rem; text-align: center; }
-      .hero h1 { font-size: 2.15rem; }
-      .hero p { font-size: 1.05rem; }
-      .reviews-header { flex-direction: column; text-align: center; }
-      .reviews-rating-summary { flex-direction: column; gap: 0.5rem; }
+      body { 
+        padding-top: 130px !important; 
+      }
+
+      .utility-bar {
+        padding: 0.3rem 0.75rem;
+      }
+
+      .utility-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .status-badge {
+        font-size: 0.68rem;
+      }
+
+      /* Hide extra links on mobile to keep header thin */
+      .utility-links .utility-link:nth-child(n+3) {
+        display: none;
+      }
+
+      .utility-links {
+        gap: 0.6rem;
+        font-size: 0.72rem;
+      }
+
+      .navbar {
+        padding: 0.5rem 0.75rem;
+      }
+
+      .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        gap: 8px;
+      }
+
+      .brand img {
+        height: 36px !important;
+      }
+
+      .brand-title {
+        font-size: 0.9rem;
+        line-height: 1.1;
+      }
+
+      .brand-sub {
+        font-size: 0.58rem;
+      }
+
+      .btn-cta {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.75rem;
+      }
+
+      .hero {
+        padding: 2.5rem 1rem 2rem;
+      }
+
+      .hero h1 { 
+        font-size: 1.75rem; 
+        line-height: 1.2;
+      }
+
+      .hero p { 
+        font-size: 0.95rem; 
+        margin-bottom: 1.5rem;
+      }
+
+      .reviews-header { 
+        flex-direction: column; 
+        text-align: center; 
+      }
+
+      .reviews-rating-summary { 
+        flex-direction: column; 
+        gap: 0.5rem; 
+      }
     }
   </style>
 </head>
@@ -537,7 +616,7 @@
     <div class="utility-bar">
       <div class="utility-container">
         <div class="status-badge">
-          <span class="status-dot"></span> 24/7 Security Active &bull; 12-Hour Remote Helpdesk
+          <span class="status-dot"></span> 24/7 Security Active
         </div>
         <div class="utility-links">
           <a href="javascript:void(0)" onclick="window.location.href='tel:'+'16788272832';" class="utility-link">
@@ -569,7 +648,7 @@
         </div>
 
         <a href="https://outlook.office.com/book/TTTEnterprisesLLC@tttenterprisesllc.onmicrosoft.com/?ismsaljsauthenabled" target="_blank" class="btn-cta">
-          Schedule Consultation
+          Schedule Consult
         </a>
       </div>
     </nav>

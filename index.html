@@ -824,7 +824,7 @@
   <!-- GOOGLE MAPS / PLACES SDK -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqnEo0CBEiYuXa-xrjP-pJp6TO8dvRuA0&libraries=places"></script>
 
-  <script>
+<script>
     function loadGoogleReviews() {
       // EXACT PLACE ID FOR TTT ENTERPRISES LLC
       const placeId = "ChIJ938vTnb-9IgRqpKiHSDu0Hc";
@@ -833,7 +833,8 @@
 
       service.getDetails({
         placeId: placeId,
-        fields: ['rating', 'user_ratings_total', 'reviews']
+        fields: ['rating', 'user_ratings_total', 'reviews'],
+        sort: google.maps.places.PlacesServiceOrder.NEWEST // Forces Google to return newest reviews first
       }, (place, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && place) {
           

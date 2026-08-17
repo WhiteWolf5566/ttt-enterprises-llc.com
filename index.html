@@ -491,19 +491,6 @@
       margin-bottom: 1rem;
     }
 
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      color: #ffffff;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-    }
-
     .user-name {
       font-weight: 700;
       color: #ffffff;
@@ -718,14 +705,16 @@
     </div>
   </section>
 
-  <!-- GOOGLE REVIEWS SECTION -->
+  <!-- LIVE GOOGLE PLACES API REVIEWS SECTION -->
   <section class="reviews-section">
     <div class="reviews-header">
       <div class="reviews-rating-summary">
-        <div class="rating-score">5.0</div>
+        <div class="rating-score" id="google-rating">--</div>
         <div>
-          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <div style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600; margin-top: 2px;">Verified Google Business Rating</div>
+          <div class="stars" id="google-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600; margin-top: 2px;">
+            Based on <span id="google-total-reviews">--</span> Google Reviews
+          </div>
         </div>
       </div>
       <a href="https://g.page/r/CaqSoh0g7tB3EAE/review" target="_blank" class="btn-google-review">
@@ -739,55 +728,75 @@
       </a>
     </div>
 
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div>
-          <div class="review-user">
-            <div class="avatar">MR</div>
-            <div>
-              <div class="user-name">Michael R.</div>
-              <div class="review-date">Recent Google Review</div>
-            </div>
-          </div>
-          <div class="stars" style="margin-bottom: 0.5rem; font-size: 0.95rem;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <p class="review-text">"TTT Enterprises handled our entire cloud migration and network overhaul seamlessly. Having a senior engineer available via Teams for direct support saves us hours every week."</p>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div>
-          <div class="review-user">
-            <div class="avatar" style="background: linear-gradient(135deg, #059669, #10b981);">SJ</div>
-            <div>
-              <div class="user-name">Sarah J.</div>
-              <div class="review-date">Recent Google Review</div>
-            </div>
-          </div>
-          <div class="stars" style="margin-bottom: 0.5rem; font-size: 0.95rem;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <p class="review-text">"Fast, reliable, and predictable pricing. The remote support desk gets our staff back up and running within minutes. Best MSP choice we've made."</p>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div>
-          <div class="review-user">
-            <div class="avatar" style="background: linear-gradient(135deg, #7c3aed, #a855f7);">DB</div>
-            <div>
-              <div class="user-name">David B.</div>
-              <div class="review-date">Recent Google Review</div>
-            </div>
-          </div>
-          <div class="stars" style="margin-bottom: 0.5rem; font-size: 0.95rem;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <p class="review-text">"Exceptional M365 and VoIP administration. They handled our multi-location setup with zero downtime. Highly recommended for any small or medium business."</p>
-        </div>
-      </div>
+    <!-- LIVE REVIEWS CONTAINER -->
+    <div class="reviews-grid" id="reviews-container">
+      <p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">Loading live Google reviews...</p>
     </div>
+
+    <!-- Hidden element required by Places SDK -->
+    <div id="map-hidden" style="display:none;"></div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 TTT Enterprises LLC. All rights reserved. | Microsoft Certified Partner</p>
+    <p>&copy; 2026 TTT Enterprises LLC. All rights reserved. | 1140 Evelyn Dr, Forest Park, GA 30297 | Microsoft Certified Partner</p>
   </footer>
+
+  <!-- GOOGLE MAPS / PLACES SDK -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqnEo0CBEiYuXa-xrjP-pJp6TO8dvRuA0&libraries=places"></script>
+
+  <script>
+    function loadGoogleReviews() {
+      // EXACT PLACE ID FOR TTT ENTERPRISES LLC
+      const placeId = "ChIJ938vTnb-9IgRqpKiHSDu0Hc";
+      
+      const service = new google.maps.places.PlacesService(document.getElementById('map-hidden'));
+
+      service.getDetails({
+        placeId: placeId,
+        fields: ['rating', 'user_ratings_total', 'reviews']
+      }, (place, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+          
+          // Update Header Score & Total
+          document.getElementById('google-rating').innerText = place.rating ? place.rating.toFixed(1) : '5.0';
+          document.getElementById('google-total-reviews').innerText = place.user_ratings_total || '0';
+
+          // Build Dynamic Review Cards
+          const container = document.getElementById('reviews-container');
+          container.innerHTML = ''; // Clear loading placeholder
+
+          if (place.reviews && place.reviews.length > 0) {
+            place.reviews.slice(0, 3).forEach(review => {
+              const stars = '&#9733;'.repeat(review.rating) + '&#9734;'.repeat(5 - review.rating);
+              
+              const card = document.createElement('div');
+              card.className = 'review-card';
+              card.innerHTML = `
+                <div>
+                  <div class="review-user">
+                    <img src="${review.profile_photo_url}" alt="${review.author_name}" style="width:42px; height:42px; border-radius:50%; object-fit: cover;">
+                    <div>
+                      <div class="user-name">${review.author_name}</div>
+                      <div class="review-date">${review.relative_time_description}</div>
+                    </div>
+                  </div>
+                  <div class="stars" style="margin-bottom: 0.5rem; font-size: 0.95rem;">${stars}</div>
+                  <p class="review-text">"${review.text}"</p>
+                </div>
+              `;
+              container.appendChild(card);
+            });
+          } else {
+            container.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">No reviews available yet.</p>';
+          }
+        }
+      });
+    }
+
+    // Trigger SDK call on page load
+    window.addEventListener('DOMContentLoaded', loadGoogleReviews);
+  </script>
 
 </body>
 </html>

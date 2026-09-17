@@ -44,6 +44,7 @@
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --star-gold: #fbbf24;
+      --qb-green: #2ca01c;
     }
 
     * {
@@ -151,6 +152,15 @@
     }
 
     .teams-highlight:hover {
+      color: #ffffff;
+    }
+
+    .qb-highlight {
+      color: #4ade80;
+      font-weight: 700;
+    }
+
+    .qb-highlight:hover {
       color: #ffffff;
     }
 
@@ -411,6 +421,48 @@
       box-shadow: 0 6px 20px rgba(91, 95, 199, 0.4);
     }
 
+    /* QUICKBOOKS INQUIRY / LEAD FORM SECTION */
+    .qb-section {
+      max-width: 1200px;
+      margin: 0 auto 5rem;
+      padding: 0 1.5rem;
+    }
+
+    .qb-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(44, 160, 28, 0.35);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .qb-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .qb-badge {
+      background: rgba(44, 160, 28, 0.15);
+      border: 1px solid rgba(44, 160, 28, 0.35);
+      color: #4ade80;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .qb-embed-container {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #000000;
+    }
+
     /* REVIEWS SECTION STYLES */
     .reviews-section {
       max-width: 1200px;
@@ -626,6 +678,7 @@
             <span>&#128172;</span> Teams Chat
           </a>
           <a href="https://support.ttthelpdesk.com" target="_blank" class="utility-link">Support Desk</a>
+          <a href="#qb-inquiry-section" class="utility-link qb-highlight"><span>&#128221;</span> Request Info (QB)</a>
           <a href="https://billing.ttt-enterprises-llc.com" target="_blank" class="utility-link">Billing</a>
           <a href="https://outlook.office.com/book/TTTEnterprisesLLC@tttenterprisesllc.onmicrosoft.com/?ismsaljsauthenabled" target="_blank" class="utility-link">Book Consult</a>
         </div>
@@ -784,6 +837,22 @@
     </div>
   </section>
 
+  <!-- QUICKBOOKS INQUIRY & LEAD FORM SECTION -->
+  <section class="qb-section" id="qb-inquiry-section">
+    <div class="qb-card">
+      <div class="qb-header">
+        <span class="qb-badge">Service & Consult Inquiry</span>
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-top: 0.5rem; color: #ffffff;">Get in Touch With Our IT Engineering Team</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0.5rem auto 0;">Submit your details below to request information, schedule an audit, or get custom pricing for your organization.</p>
+      </div>
+
+      <!-- EXACT INTUIT EMBEDDED LEAD FORM -->
+      <div class="qb-embed-container">
+        <script id="intuit-form-622876" src="https://form-assets-prod.mcf-prod.a.intuit.com/snippet/account/265075187?formId=622876" async></script>
+      </div>
+    </div>
+  </section>
+
   <!-- LIVE GOOGLE PLACES API REVIEWS SECTION -->
   <section class="reviews-section">
     <div class="reviews-header">
@@ -818,7 +887,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 TTT Enterprises LLC. All rights reserved. | Forest Park, GA 30297 | Microsoft Certified Partner</p>
+    <p>&copy; 2026 TTT Enterprises LLC. All rights reserved. | Forest Park, GA 30297 | Microsoft Certified Partner | <a href="#qb-inquiry-section" style="color: #4ade80; font-weight: 600;">Request IT Services (QB)</a></p>
   </footer>
 
   <!-- GOOGLE MAPS / PLACES SDK -->
